@@ -39,17 +39,7 @@ func WriteFile(path string, base64_image_content string) (bool, string) {
 	allData := re.FindAllSubmatch([]byte(base64_image_content), 2)
 	fileType := string(allData[0][1]) //png ，jpeg 后缀获取
 	base64Str := re.ReplaceAllString(base64_image_content, "")
-	date := time.Now().Format("2006-01-02")
-	if ok := IsFileExist(path + "/" + date); !ok {
-		os.Mkdir(path+"/"+date, 0666)
-	}
-
-	curFileStr := strconv.FormatInt(time.Now().UnixNano(), 10)
-
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	n := r.Intn(99999)
-
-	var file string = path + "/" + date + "/" + curFileStr + strconv.Itoa(n) + "." + fileType
+	file := path + "/" + strconv.FormatInt(time.Now().Unix(), 10) + strconv.Itoa(rand.Intn(999999-100000)+100000) + "." + fileType
 	byte, _ := base64.StdEncoding.DecodeString(base64Str)
 
 	err := ioutil.WriteFile(file, byte, 0666)
@@ -57,5 +47,5 @@ func WriteFile(path string, base64_image_content string) (bool, string) {
 		log.Println(err)
 	}
 
-	return true, "/" + date + "/" + curFileStr + strconv.Itoa(n) + "." + fileType
+	return true, file
 }
