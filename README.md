@@ -27,3 +27,5 @@ http://ip:8080/api/picture
 post请求参数
 1. 参数1 type 1 参数2 file 文件
 2. 参数1 type 2 参数2 base 图片base64
+
+![截图1](https://raw.githubusercontent.com/Anderyly/middleware-paddle/master/1.png)
